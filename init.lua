@@ -10,10 +10,10 @@ local funkymash = {"cmd", "ctrl", "shift"}
 local laptopScreen = "Color LCD"
 
 local internal_display = {
-        {"Google Chrome",  nil,          laptopScreen, nil, nil, hs.geometry.rect(0, 469, 717, 428)},
-        {"Messenger",    nil,          laptopScreen, nil, nil, hs.geometry.rect(0, 24, 350, 443)},
+        {"Google Chrome",  nil,          laptopScreen, nil, nil, hs.geometry.rect(0, 450, 720, 445)},
+        {"Messenger",    nil,          laptopScreen, nil, nil, hs.geometry.rect(0, 24, 350, 425)},
         {"Sublime Text",  nil,     laptopScreen, hs.layout.right50, nil, nil},
-        {"Terminal",  nil,     laptopScreen, nil, nil, hs.geometry.rect(350, 24, 366, 451)},
+        {"Terminal",  nil,     laptopScreen, nil, nil, hs.geometry.rect(350, 24, 366, 430)},
     }
 hs.hotkey.bind(hyper, '1', function() hs.layout.apply(internal_display) end)
 
