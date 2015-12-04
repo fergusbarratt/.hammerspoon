@@ -6,17 +6,39 @@ local hyper = {"shift", "cmd", "alt", "ctrl"}
 local mash      = {"cmd", "alt", "ctrl"}
 local mashshift = {"cmd", "alt", "shift"}
 local funkymash = {"cmd", "ctrl", "shift"}
-
+-- Right half is width so that python code doesn't wrap over in sublime
+-- Left bottom removes black bars in netflix
 local laptopScreen = "Color LCD"
-
-local internal_display = {
-        {"Google Chrome",  nil,          laptopScreen, nil, nil, hs.geometry.rect(0, 450, 720, 445)},
-        {"Messenger",    nil,          laptopScreen, nil, nil, hs.geometry.rect(0, 24, 350, 425)},
-        {"Sublime Text",  nil,     laptopScreen, hs.layout.right50, nil, nil},
-        {"Terminal",  nil,     laptopScreen, nil, nil, hs.geometry.rect(350, 24, 366, 430)},
+rightHalf = hs.geometry.rect(700, 23, 740, 900)
+leftHalf = hs.geometry.rect(0, 23, 700, 900)
+bottomLeft = hs.geometry.rect(0, 430, 700, 466)
+bottomRight = hs.geometry.rect(720, 450, 740, 445)
+topLeft = hs.geometry.rect(0, 23, 700, 413)
+topRight = hs.geometry.rect(700, 23, 740, 425)
+topRightHalfWidthLeft = hs.geometry.rect(700, 23, 370, 405)
+topRightHalfWidthRight = hs.geometry.rect(1070, 23, 370, 405)
+topLeftHalfWidthLeft = hs.geometry.rect(0, 23, 350, 405)
+topLeftHalfWidthRight = hs.geometry.rect(350, 23, 350, 405)
+bottomRightHalfWidthLeft = hs.geometry.rect(700, 450, 370, 445)
+bottomRightHalfWidthRight = hs.geometry.rect(1070, 450, 370, 445)
+bottomLeftHalfWidthLeft = hs.geometry.rect(0, 430, 350, 466, 466)
+bottomLeftHalfWidthRight = hs.geometry.rect(350, 430, 350, 466, 466)
+local display_1 = {
+        {"Google Chrome", nil, laptopScreen, nil, nil, bottomLeft},
+        {"Sublime Text", nil, laptopScreen, nil, nil, rightHalf},
+        {"Messenger", nil, laptopScreen, nil, nil, topLeftHalfWidthLeft},
+        {"Terminal", nil, laptopScreen, nil, nil, topLeftHalfWidthRight},
     }
-hs.hotkey.bind(hyper, '1', function() hs.layout.apply(internal_display) end)
+local display_2 = {
+        {"Google Chrome", nil, laptopScreen, nil, nil, bottomLeft},
+        {"Sublime Text", nil, laptopScreen, nil, nil, topLeft},
+        {"Messenger", nil, laptopScreen, nil, nil, bottomLeftHalfWidthLeft},
+        {"Atom", nil, laptopScreen, nil, nil, bottomLeftHalfWidthRight},
+    }
 
+hs.hotkey.bind(hyper, '1', function() hs.layout.apply(display_1) end)
+hs.hotkey.bind(hyper, '2', function() hs.layout.apply(display_2) end)
+hs.hotkey.bind(hyper, 'r', function() hs.reload() end)
 -----------------------------------------------
 -- hyper a for left one half window
 -----------------------------------------------
@@ -225,13 +247,5 @@ hs.hotkey.bind(hyper, 'T', function() hs.alert.show(os.date("%A %b %d, %Y - %I:%
 hs.hotkey.bind(hyper, ']', function() hs.audiodevice.defaultOutputDevice():setVolume(hs.audiodevice.current().volume + 5) end)
 hs.hotkey.bind(hyper, '[', function() hs.audiodevice.defaultOutputDevice():setVolume(hs.audiodevice.current().volume - 5) end)
 
------------------------------------------------
--- Reload config on write
------------------------------------------------
-
-function reload_config(files)
-    hs.reload()
-end
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
 
 hs.alert.show("Hammerspoon, at your service.", 3)
